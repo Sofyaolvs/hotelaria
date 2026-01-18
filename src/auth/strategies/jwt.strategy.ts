@@ -18,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   validate(payload: JwtPayload) {
-    if (payload.email !== 'admin') {
+    if (payload.email !== 'admin@hotel.com') {
       throw new UnauthorizedException('Token inválido');
     }
 

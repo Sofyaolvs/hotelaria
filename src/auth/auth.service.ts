@@ -6,7 +6,7 @@ export class AuthService {
   constructor(private jwtService: JwtService) {}
 
   login(email: string, password: string) {
-    if (email !== 'admin' || password !== '123456') {
+    if (email !== 'admin@hotel.com' || password !== '123456') {
       throw new UnauthorizedException('Credenciais inválidas');
     }
 
