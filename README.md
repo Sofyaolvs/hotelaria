@@ -14,6 +14,7 @@ API REST para gerenciamento de hotéis, hóspedes e reservas.
 
 ### Com Docker 
 
+Para iniciar os containers:
 **docker-compose up --build -d**
 
 Isso irá iniciar:
