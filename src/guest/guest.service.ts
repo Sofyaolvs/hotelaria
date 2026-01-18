@@ -18,7 +18,7 @@ export class GuestService {
         }
     }
 
-    async findALL():Promise<Guest[]>{
+    async findAll():Promise<Guest[]>{
         try {
             const allGuest = await this.guestRepository.find()
             return allGuest
@@ -32,7 +32,7 @@ export class GuestService {
         try {
             const guest =  this.guestRepository.findOne({
                 where:{id},
-                // relations:[]
+                relations:['bookings']
             })
             return guest
         } catch (error) {
@@ -41,7 +41,7 @@ export class GuestService {
         }
     }
 
-    async deletGuest(id:string):Promise<void>{
+    async deleteGuest(id:string):Promise<void>{
         try {
             await this.guestRepository.delete({id})
         } catch (error) {

@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Booking } from "src/booking/entities/booking.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn, ManyToMany, JoinTable } from "typeorm";
 
 @Entity()
 export class Guest {
@@ -9,14 +10,13 @@ export class Guest {
     name:string
 
     @Column()
-    cpf:string
+    document:string
 
     @Column()
     phone:string
 
-    // @ManyToOne(() => Reserva, Booking => Booking.guest)
-    // @JoinColumn({name: 'guest_id'})
-    // booking: Reserva
+    @ManyToMany(() => Booking, booking => booking.guests)
+    bookings: Booking[]
 
     @CreateDateColumn({name:'created_at'})
     createdAt: Date;

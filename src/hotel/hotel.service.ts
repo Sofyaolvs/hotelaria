@@ -34,8 +34,8 @@ export class HotelService {
     async findById(id:string):Promise<Hotel | null>{
         try {
             const hotel = await this.hotelRepository.findOne({ 
-                where:{id}
-                // relations:[]
+                where:{id},
+                relations:['bookings']
             })
             return hotel
         } catch (error) {

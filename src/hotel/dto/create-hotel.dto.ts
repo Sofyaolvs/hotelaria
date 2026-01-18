@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateHotelDto{
     @IsString()
@@ -9,7 +9,7 @@ export class CreateHotelDto{
     @IsNotEmpty()
     city: string;
     
-    @IsString()
+    @IsNumber()
     @IsNotEmpty()
-    rooms: string;
+    rooms: number;
 }

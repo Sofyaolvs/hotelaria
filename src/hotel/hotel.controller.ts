@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { CreateHotelDto } from "./dto/create-hotel.dto";
 import { Hotel } from "./entities/hotel.entity";
 import { HotelService } from "./hotel.service";
+import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guards";
 
 @Controller('hotel')
+@UseGuards(JwtAuthGuard)
 export class HotelController {
     constructor(private readonly hotelService: HotelService){}
 

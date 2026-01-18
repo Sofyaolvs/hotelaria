@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Booking } from "src/booking/entities/booking.entity";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('hotel')
 export class Hotel {
@@ -12,11 +13,10 @@ export class Hotel {
     city:string
 
     @Column()
-    rooms:string
+    rooms:number
     
-    // @ManyToOne(() => Enterprise, enterprise => enterprise.users)
-    // @JoinColumn({name: 'enterprise_id'})
-    // enterprise: Enterprise;
+    @OneToMany(() => Booking, booking => booking.hotel)
+    bookings: Booking[]
 
 
     @CreateDateColumn({name:'created_at'})
