@@ -48,7 +48,7 @@ export default function SideBar({ activeItem, onNavigate }: SideBarProps) {
               size="xl"
               fullWidth
               icon={<Icon className="w-6 h-6" />}
-              className={`justify-start !py-3 !bg-transparent hover:!bg-transparent ${isActive ? 'underline !text-blue-500' : 'hover:!text-white'}`}
+              className={`justify-start !m-3 !bg-transparent hover:!bg-transparent ${isActive ? 'underline !text-blue-500' : 'hover:!text-white'}`}
             >
               <span className="flex-1 text-left">{item.label}</span>
             </Button>
@@ -56,11 +56,11 @@ export default function SideBar({ activeItem, onNavigate }: SideBarProps) {
         })}
       </nav>
 
-      <div className="my-6 border-t border-slate-700/50"></div>
 
       <div className="p-4 mt-auto">
         <Button
           variant="secondary"
+          className='!bg-transparent hover:!bg-transparent hover:text-danger-600 !justify-start !m-3'
           fullWidth
           icon={<LogOut className="w-5 h-5" />}
         >
