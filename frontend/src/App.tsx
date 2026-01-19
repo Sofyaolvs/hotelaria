@@ -1,10 +1,11 @@
 import './App.css'
+import Sidebar from './components/sidebar'
 
 function App() {
   return (
-    <>
-      <h1>Hotelaria</h1>  
-    </>
+    <div className="flex min-h-screen bg-zinc-50">
+      <Sidebar />
+    </div>
   )
 }
 
