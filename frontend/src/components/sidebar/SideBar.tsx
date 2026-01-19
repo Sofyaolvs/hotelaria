@@ -1,16 +1,18 @@
-import { useState } from 'react';
 import {
   LayoutGrid,
   Building2,
   Calendar,
   Users,
   LogOut,
-  ChevronRight,
 } from 'lucide-react';
-import Button from '../button';
+import Button from '../button/button';
 
-export default function SideBar() {
-  const [activeItem, setActiveItem] = useState('dashboard');
+interface SideBarProps {
+  activeItem: string;
+  onNavigate: (route: string) => void;
+}
+
+export default function SideBar({ activeItem, onNavigate }: SideBarProps) {
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid },
@@ -27,7 +29,7 @@ export default function SideBar() {
             <Building2 className="w-7 h-7 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">Reservas.com</h1>
+            <h1 className="text-2 font-bold text-white tracking-tight">Reservas.com</h1>
           </div>
         </div>
       </div>
@@ -41,12 +43,12 @@ export default function SideBar() {
           return (
             <Button
               key={item.id}
-              onClick={() => setActiveItem(item.id)}
-              variant={isActive ? 'primary' : 'ghost'}
+              onClick={() => onNavigate(item.id)}
+              variant="ghost"
               size="xl"
               fullWidth
               icon={<Icon className="w-6 h-6" />}
-              className={`justify-start ${isActive ? '!py-3' : '!py-3'}`}
+              className={`justify-start !py-3 !bg-transparent hover:!bg-transparent ${isActive ? 'underline !text-blue-500' : 'hover:!text-white'}`}
             >
               <span className="flex-1 text-left">{item.label}</span>
             </Button>
