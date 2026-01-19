@@ -11,14 +11,14 @@ function App() {
 
   const renderPage = () => {
     switch (currentRoute) {
+      case 'dashboard':
+        return <HomePage />
       case 'hotels':
         return <HotelPage />
-      case 'bookings':
+      case 'reservas':
         return <BookingPage />
-      case 'guests':
+      case 'hospedes':
         return <GuestsPage />
-      case 'home':
-        return <HomePage />
     }
   }
 

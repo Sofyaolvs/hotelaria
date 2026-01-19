@@ -23,9 +23,9 @@ export function getSearchBarConfig(route:string){
 
 export default function SearchBar({placeholder}: SearchBarProps) {
   return (
-    <div className="flex items-center gap-2 w-340 h-12 border-3 border-neutral-400 rounded-xl px-2">
+    <div className="flex items-center gap-2 w-340 h-12 border-3 border-neutral-400 rounded-xl px-2 mx-auto">
       <Search className="w-6 h-6 text-neutral-400 gap-2 !ml-2"/>
-      <input type="text" placeholder={placeholder} className="w-320 h-12 focus:outline-none text-neutral-700 font-medium " />
+      <input type="text" placeholder={placeholder} className="w-auto h-12 focus:outline-none text-neutral-700 font-medium " />
     </div>
   )
 }
