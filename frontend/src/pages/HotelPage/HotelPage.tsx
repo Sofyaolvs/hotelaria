@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { HotelCard } from "@/components/cards";
 import { PageLayout } from "@/components/layout";
+import { HotelFormModal } from "@/components/modal";
 
 const mockHotels = [
   { id: 1, name: 'Pousada cumbuco', city: 'Cumbuco', rooms: 120 },
@@ -7,7 +9,10 @@ const mockHotels = [
 ]
 
 export default function HotelPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleAddHotel = () => {
+    setIsModalOpen(true);
   }
 
   return (
@@ -25,6 +30,8 @@ export default function HotelPage() {
           <HotelCard key={hotel.id} name={hotel.name} city={hotel.city} rooms={hotel.rooms} />
         ))}
       </div>
+
+      <HotelFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </PageLayout>
   );
 }

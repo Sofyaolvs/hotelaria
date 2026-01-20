@@ -1,9 +1,10 @@
-import { Calendar, Building2, User } from 'lucide-react';
+import { Calendar, Building2, User, BedDouble } from 'lucide-react';
 
 interface Booking {
   id: number;
   hotel: string;
   guest: string;
+  roomType: string;
   checkIn: string;
   checkOut: string;
 }
@@ -32,6 +33,12 @@ export default function BookingTable({ bookings }: BookingTableProps) {
             </th>
             <th className="py-4 px-6 text-sm font-semibold text-primary-900 text-center">
               <div className="flex items-center justify-center gap-2">
+                <BedDouble className="w-6 h-6" />
+                Tipo de Quarto
+              </div>
+            </th>
+            <th className="py-4 px-6 text-sm font-semibold text-primary-900 text-center">
+              <div className="flex items-center justify-center gap-2">
                 <Calendar className="w-6 h-6" />
                 Check-in
               </div>
@@ -55,6 +62,9 @@ export default function BookingTable({ bookings }: BookingTableProps) {
               </td>
               <td className="py-5 px-6 text-center">
                 <span className="text-primary-900 text-lg">{booking.guest}</span>
+              </td>
+              <td className="py-5 px-6 text-center">
+                <span className="text-primary-900 text-lg">{booking.roomType}</span>
               </td>
               <td className="py-5 px-6 text-center">
                 <span className="text-primary-900 text-lg">{booking.checkIn}</span>

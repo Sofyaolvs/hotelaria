@@ -1,9 +1,11 @@
-import { Building2, Calendar, User, FileText } from "lucide-react";
+import { Building2, Calendar, User, FileText, Phone, Mail, BedDouble } from "lucide-react";
 
 interface Guest {
   id: number;
   name: string;
   document: string;
+  phone: string;
+  email: string;
 }
 
 interface BookingWithGuests {
@@ -11,6 +13,7 @@ interface BookingWithGuests {
   hotel: string;
   checkIn: string;
   checkOut: string;
+  roomType: string;
   guests: Guest[];
 }
 
@@ -26,7 +29,6 @@ export default function GuestCard({ bookings }: BookingGuestsCardProps) {
           key={booking.id}
           className="bg-white border border-slate-200 rounded-2xl shadow-sm w-full overflow-hidden flex flex-col"
         >
-          {/* Header */}
           <div className="bg-secondary-800 !px-6 !py-4 flex items-center justify-between">
             <div className="flex items-center gap-2 text-white">
               <Building2 className="w-5 h-5" />
@@ -39,6 +41,11 @@ export default function GuestCard({ bookings }: BookingGuestsCardProps) {
             </div>
 
             <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 text-white">
+                <BedDouble className="w-4 h-4" />
+                <span className="text-sm font-semibold">{booking.roomType}</span>
+              </div>
+
               <div className="flex items-center gap-2 text-white">
                 <Calendar className="w-4 h-4" />
                 <span className="text-sm font-semibold">
@@ -61,18 +68,25 @@ export default function GuestCard({ bookings }: BookingGuestsCardProps) {
                 {booking.guests.map((guest) => (
                   <div
                     key={guest.id}
-                    className="flex items-center justify-between !px-4 !py-3 bg-slate-50 border-b border-slate-300"
+                    className="grid grid-cols-3 gap-4 !px-4 !py-3 bg-slate-50 border-b border-slate-300"
                   >
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <User className="w-4 h-4 text-secondary-900" />
+                        <span className="font-medium text-slate-800">{guest.name}</span>
+                      </div>
+                    </div>
+
                     <div className="flex items-center gap-2">
-                      <User className="w-4 h-4 text-secondary-900" />
-                      <p className="text-sm text-slate-600">Hóspede:</p>
-                      <span className="font-medium text-slate-800">{guest.name}</span>
+                      <Phone className="w-4 h-4 text-secondary-900" />
+                      <span className="text-sm text-slate-600">{guest.phone}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-600">
-                      <FileText className="w-4 h-4 text-secondary-900" />
-                      <p className="text-sm text-slate-600">Documento:</p>
-                      <span className="text-sm font-semibold text-slate-800">{guest.document}</span>
+
+                    <div className="flex items-center gap-2">
+                        <FileText className="w-4 h-4 text-secondary-900" />
+                        <span className="text-sm text-slate-600">{guest.document}</span>
                     </div>
+
                   </div>
                 ))}
               </div>
