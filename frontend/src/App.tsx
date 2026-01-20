@@ -6,14 +6,11 @@ import BookingPage from './pages/BookingsPage/BookingPage'
 import GuestsPage from './pages/GuestsPage/GuestsPage'
 import HomePage from './pages/HomePage/HomePage'
 import LoginPage from './pages/LoginPage/LoginPage'
+import { useAuth } from './hooks/useAuth'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { isAuthenticated, isLoading, error, login, logout } = useAuth()
   const [currentRoute, setCurrentRoute] = useState('dashboard')
-
-  const handleLogin = () => {
-    setIsAuthenticated(true)
-  }
 
   const renderPage = () => {
     switch (currentRoute) {
@@ -29,12 +26,12 @@ function App() {
   }
 
   if (!isAuthenticated) {
-    return <LoginPage onLogin={handleLogin} />
+    return <LoginPage onLogin={login} isLoading={isLoading} error={error} />
   }
 
   return (
     <div className="app-container">
-      <Sidebar activeItem={currentRoute} onNavigate={setCurrentRoute} />
+      <Sidebar activeItem={currentRoute} onNavigate={setCurrentRoute} onLogout={logout} />
       {renderPage()}
     </div>
   )

@@ -10,9 +10,10 @@ import './index.css';
 interface SideBarProps {
   activeItem: string;
   onNavigate: (route: string) => void;
+  onLogout?: () => void;
 }
 
-export default function SideBar({ activeItem, onNavigate }: SideBarProps) {
+export default function SideBar({ activeItem, onNavigate, onLogout }: SideBarProps) {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid },
     { id: 'hotels', label: 'Hotéis', icon: Building2 },
@@ -53,7 +54,7 @@ export default function SideBar({ activeItem, onNavigate }: SideBarProps) {
       </nav>
 
       <div className="sidebar-footer">
-        <button className="sidebar-logout">
+        <button className="sidebar-logout" onClick={onLogout}>
           <LogOut />
           <span>Sair do Sistema</span>
         </button>

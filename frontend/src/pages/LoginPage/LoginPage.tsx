@@ -2,22 +2,26 @@ import { useState } from 'react';
 import './index.css';
 
 interface LoginPageProps {
-  onLogin: () => void;
+  onLogin: (email: string, password: string) => Promise<void>;
+  isLoading?: boolean;
+  error?: string | null;
 }
 
-export default function LoginPage({ onLogin }: LoginPageProps) {
+export default function LoginPage({ onLogin, isLoading, error }: LoginPageProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin();
+    await onLogin(email, password);
   };
 
   return (
     <div className="login-container">
       <div className="login-card">
         <h1 className="login-title">Login</h1>
+
+        {error && <div className="login-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
@@ -28,6 +32,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -39,11 +44,12 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={isLoading}
             />
           </div>
 
-          <button type="submit" className="login-button">
-            Entrar
+          <button type="submit" className="login-button" disabled={isLoading}>
+            {isLoading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
       </div>
