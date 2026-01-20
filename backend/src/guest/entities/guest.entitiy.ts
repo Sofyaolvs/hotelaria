@@ -15,6 +15,9 @@ export class Guest {
     @Column()
     phone:string
 
+    @Column()
+    email:string
+
     @ManyToMany(() => Booking, booking => booking.guests)
     bookings: Booking[]
 

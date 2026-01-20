@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 import { IsDocument } from "../decorators/is-cpf.decorator";
 
 export class CreateGuestDto {
@@ -14,4 +14,8 @@ export class CreateGuestDto {
     @IsString()
     @IsNotEmpty()
     phone: string;
+
+    @IsEmail()
+    @IsNotEmpty()
+    email:string
 }

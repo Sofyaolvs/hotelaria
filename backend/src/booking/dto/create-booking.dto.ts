@@ -1,5 +1,6 @@
 import { Type } from "class-transformer";
-import { IsArray, IsDate, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsArray, IsDate, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { RoomType } from "../enums/room-type.enum";
 
 export class CreateBookingDto {
     @IsString()
@@ -24,4 +25,8 @@ export class CreateBookingDto {
     @IsString()
     @IsNotEmpty()
     responsibleName: string;
+
+    @IsEnum(RoomType)
+    @IsNotEmpty()
+    roomType: RoomType;
 }
