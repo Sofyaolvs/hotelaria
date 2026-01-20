@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react';
 import Button from '../button/button';
+import './index.css';
 
 interface HeaderProps {
   title: string;
@@ -47,23 +48,22 @@ export default function Header({
   onAddClick,
 }: HeaderProps) {
   return (
-    <header className="flex items-center justify-between py-6 px-8">
-      <div>
-        <h1 className="text-4xl font-bold text-primary-900 ">{title}</h1>
-        <p className="text-md text-slate-600 mt-1">{description}</p>
+    <header className="header">
+      <div className="header-content">
+        <h1>{title}</h1>
+        <p>{description}</p>
       </div>
 
       {showAddButton && (
         <Button
           variant="primary"
           size="md"
-          icon={<Plus className="w-5 h-5" />}
+          icon={<Plus style={{ width: 20, height: 20 }} />}
           onClick={onAddClick}
         >
           {addButtonLabel}
         </Button>
       )}
-
     </header>
   );
 }

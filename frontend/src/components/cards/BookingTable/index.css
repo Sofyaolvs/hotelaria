@@ -1,0 +1,64 @@
+.booking-table-container {
+  overflow: hidden;
+}
+
+.booking-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.booking-table thead tr {
+  height: 56px;
+}
+
+.booking-table th {
+  padding: 16px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e3a8a;
+  text-align: center;
+}
+
+.booking-table th > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.booking-table th svg {
+  width: 24px;
+  height: 24px;
+}
+
+.booking-table tbody tr {
+  border-bottom: 1px solid #94a3b8;
+  transition: background-color 0.2s;
+  height: 64px;
+}
+
+.booking-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.booking-table td {
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.booking-table td span {
+  font-size: 18px;
+  color: #1e3a8a;
+}
+
+.booking-table td span.hotel-name {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.booking-table-empty {
+  padding: 48px;
+  text-align: center;
+  color: #64748b;
+}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Modal from './Modal';
+import Modal from './modal/Modal';
 import Button from '../button/button';
 
 interface GuestFormModalProps {
@@ -36,61 +36,49 @@ export default function GuestFormModal({ isOpen, onClose }: GuestFormModalProps)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Novo Hóspede">
-      <form onSubmit={handleSubmit} className="space-y-4 !m-6">
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Nome Completo
-          </label>
+      <form onSubmit={handleSubmit} className="modal-form">
+        <div className="modal-form-group">
+          <label>Nome Completo</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all"
             placeholder="Ex: João Silva"
             required
           />
         </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              CPF ou Passaporte
-            </label>
-            <input
-              type="text"
-              name="document"
-              value={formData.document}
-              onChange={handleChange}
-              className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all"
-              placeholder="000.000.000-00"
-              required
-            />
-          </div>
-          
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Telefone
-          </label>
+        <div className="modal-form-group">
+          <label>CPF ou Passaporte</label>
+          <input
+            type="text"
+            name="document"
+            value={formData.document}
+            onChange={handleChange}
+            placeholder="000.000.000-00"
+            required
+          />
+        </div>
+
+        <div className="modal-form-group">
+          <label>Telefone</label>
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all"
             placeholder="(00) 00000-0000"
             required
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Vincular a Reserva (opcional)
-          </label>
+        <div className="modal-form-group">
+          <label>Vincular a Reserva (opcional)</label>
           <select
             name="bookingId"
             value={formData.bookingId}
             onChange={handleChange}
-            className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all bg-white"
           >
             <option value="">Nenhuma reserva</option>
             {availableBookings.map((booking) => (
@@ -101,11 +89,11 @@ export default function GuestFormModal({ isOpen, onClose }: GuestFormModalProps)
           </select>
         </div>
 
-        <div className="flex gap-3 pt-4">
-          <Button type="button" variant="ghost" onClick={onClose} fullWidth className='!mt-4'>
+        <div className="modal-form-actions">
+          <Button type="button" variant="ghost" onClick={onClose} fullWidth>
             Cancelar
           </Button>
-          <Button type="submit" variant="primary" fullWidth className='!mt-4'>
+          <Button type="submit" variant="primary" fullWidth>
             Cadastrar Hóspede
           </Button>
         </div>

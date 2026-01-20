@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { PageLayout } from "@/components/layout";
 import { BookingTable } from "@/components/cards";
-import { BookingFormModal } from "@/components/modal";
+import { BookingFormModal } from "@/components/modals";
+import './index.css';
 
 const mockBookings = [
   {
@@ -55,7 +56,7 @@ export default function BookingPage() {
       showSearchBar
       searchPlaceholder="Buscar reservas por hóspede ou hotel"
     >
-      <div className="mt-6">
+      <div className="bookings-container">
         <BookingTable bookings={mockBookings} />
       </div>
 

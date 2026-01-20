@@ -1,0 +1,147 @@
+.guest-cards-container {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  padding: 0 16px;
+  margin-top: 16px;
+}
+
+.guest-card {
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.guest-card-header {
+  background-color: #3730a3;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.guest-card-hotel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.guest-card-hotel svg {
+  width: 20px;
+  height: 20px;
+}
+
+.guest-card-hotel-info {
+  line-height: 1.2;
+}
+
+.guest-card-hotel-info p {
+  font-weight: 600;
+  margin: 0;
+}
+
+.guest-card-hotel-info span {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.guest-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.guest-card-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.guest-card-meta-item svg {
+  width: 16px;
+  height: 16px;
+}
+
+.guest-card-meta-item span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.guest-card-badge {
+  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  background-color: #6366f1;
+  font-weight: 700;
+  color: #fff;
+}
+
+.guest-card-body {
+  padding: 20px 16px;
+  flex: 1;
+}
+
+.guest-card-guests {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guest-card-guest-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 12px 16px;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.guest-card-guest-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.guest-card-guest-info > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.guest-card-guest-info svg {
+  width: 16px;
+  height: 16px;
+  color: #312e81;
+}
+
+.guest-card-guest-info span {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.guest-card-guest-info .secondary {
+  font-weight: 400;
+  font-size: 14px;
+  color: #475569;
+}
+
+.guest-card-empty {
+  color: #64748b;
+  font-size: 14px;
+  text-align: center;
+  padding: 24px;
+}
+
+.guest-cards-empty {
+  padding: 48px;
+  text-align: center;
+  color: #64748b;
+  width: 100%;
+}

@@ -1,0 +1,12 @@
+.home-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .home-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

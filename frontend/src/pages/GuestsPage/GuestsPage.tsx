@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { GuestCard } from "@/components/cards";
 import { PageLayout } from "@/components/layout";
-import { GuestFormModal } from "@/components/modal";
+import { GuestFormModal } from "@/components/modals";
+import './index.css';
 
 export default function GuestsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);

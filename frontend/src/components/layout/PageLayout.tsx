@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Header } from '../header';
 import SearchBar from '../searchBar/searchBar';
+import './index.css';
 
 interface PageLayoutProps {
   title: string;
@@ -24,7 +25,7 @@ export default function PageLayout({
   children,
 }: PageLayoutProps) {
   return (
-    <div className="flex-1 flex flex-col !m-4">
+    <div className="page-layout">
       <Header
         title={title}
         description={description}
@@ -32,7 +33,7 @@ export default function PageLayout({
         addButtonLabel={addButtonLabel}
         onAddClick={onAddClick}
       />
-      <main className="flex-1 p-8 !mt-4">
+      <main>
         {showSearchBar && <SearchBar placeholder={searchPlaceholder} />}
         {children}
       </main>

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { HotelCard } from "@/components/cards";
 import { PageLayout } from "@/components/layout";
-import { HotelFormModal } from "@/components/modal";
+import { HotelFormModal } from "@/components/modals";
+import './index.css';
 
 const mockHotels = [
   { id: 1, name: 'Pousada cumbuco', city: 'Cumbuco', rooms: 120 },
@@ -25,7 +26,7 @@ export default function HotelPage() {
       showSearchBar
       searchPlaceholder="Buscar hotéis por nome ou cidade"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
+      <div className="hotel-grid">
         {mockHotels.map((hotel) => (
           <HotelCard key={hotel.id} name={hotel.name} city={hotel.city} rooms={hotel.rooms} />
         ))}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Modal from './Modal';
+import Modal from './modal/Modal';
 import Button from '../button/button';
 
 interface BookingFormModalProps {
@@ -30,16 +30,13 @@ export default function BookingFormModal({ isOpen, onClose }: BookingFormModalPr
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Nova Reserva">
-      <form onSubmit={handleSubmit} className="space-y-4 !m-6">
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Hotel
-          </label>
+      <form onSubmit={handleSubmit} className="modal-form">
+        <div className="modal-form-group">
+          <label>Hotel</label>
           <select
             name="hotel"
             value={formData.hotel}
             onChange={handleChange}
-            className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all bg-white"
             required
           >
             <option value="">Selecione um hotel</option>
@@ -48,15 +45,12 @@ export default function BookingFormModal({ isOpen, onClose }: BookingFormModalPr
           </select>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Responsável
-          </label>
+        <div className="modal-form-group">
+          <label>Responsável</label>
           <select
             name="guest"
             value={formData.guest}
             onChange={handleChange}
-            className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all bg-white"
             required
           >
             <option value="">Selecione o responsável</option>
@@ -66,45 +60,36 @@ export default function BookingFormModal({ isOpen, onClose }: BookingFormModalPr
           </select>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Check-in
-            </label>
+        <div className="modal-form-row">
+          <div className="modal-form-group">
+            <label>Check-in</label>
             <input
               type="date"
               name="checkIn"
               value={formData.checkIn}
               onChange={handleChange}
-              className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Check-out
-            </label>
+          <div className="modal-form-group">
+            <label>Check-out</label>
             <input
               type="date"
               name="checkOut"
               value={formData.checkOut}
               onChange={handleChange}
-              className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all"
               required
             />
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Tipo de Quarto
-          </label>
+        <div className="modal-form-group">
+          <label>Tipo de Quarto</label>
           <select
             name="roomType"
             value={formData.roomType}
             onChange={handleChange}
-            className="w-full !px-4 !py-3 border border-slate-300 rounded-xl focus:border-secondary-400 outline-none transition-all bg-white"
             required
           >
             <option value="">Selecione o tipo</option>
@@ -114,11 +99,11 @@ export default function BookingFormModal({ isOpen, onClose }: BookingFormModalPr
           </select>
         </div>
 
-        <div className="flex gap-3 pt-4">
-          <Button type="button" variant="ghost" onClick={onClose} fullWidth className='!mt-4'>
+        <div className="modal-form-actions">
+          <Button type="button" variant="ghost" onClick={onClose} fullWidth>
             Cancelar
           </Button>
-          <Button type="submit" variant="primary" fullWidth className='!mt-4'>
+          <Button type="submit" variant="primary" fullWidth>
             Criar Reserva
           </Button>
         </div>
