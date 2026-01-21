@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 import { IsDocument } from "../decorators/is-cpf.decorator";
 
 export class CreateGuestDto {
@@ -17,5 +17,10 @@ export class CreateGuestDto {
 
     @IsEmail()
     @IsNotEmpty()
-    email:string
+    email: string;
+
+    @IsOptional()
+    @IsArray()
+    @IsUUID('4', { each: true })
+    bookingIds?: string[];
 }
