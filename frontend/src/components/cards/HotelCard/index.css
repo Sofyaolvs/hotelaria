@@ -31,11 +31,33 @@
   margin: 8px;
 }
 
+.hotel-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
 .hotel-card-content h3 {
   font-size: 18px;
   font-weight: 600;
   color: #1e293b;
-  margin-bottom: 8px;
+  margin: 0;
+}
+
+.hotel-card-delete {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #94a3b8;
+  border-radius: 4px;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.hotel-card-delete:hover {
+  color: #ef4444;
+  background-color: #fef2f2;
 }
 
 .hotel-card-info {

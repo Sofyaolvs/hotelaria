@@ -1,20 +1,33 @@
-import { Building2, MapPin } from 'lucide-react';
+import { Building2, MapPin, Trash2 } from 'lucide-react';
 import './index.css';
 
 interface HotelCardProps {
+  id: number;
   name: string;
   city: string;
   rooms: number;
+  onDelete?: (id: number) => void;
 }
 
-export default function HotelCard({ name, city, rooms }: HotelCardProps) {
+export default function HotelCard({ id, name, city, rooms, onDelete }: HotelCardProps) {
   return (
     <div className="hotel-card">
       <div className="hotel-card-image">
         <Building2 />
       </div>
       <div className="hotel-card-content">
-        <h3>{name}</h3>
+        <div className="hotel-card-header">
+          <h3>{name}</h3>
+          {onDelete && (
+            <button
+              className="hotel-card-delete"
+              onClick={() => onDelete(id)}
+              title="Excluir hotel"
+            >
+              <Trash2 size={18} />
+            </button>
+          )}
+        </div>
         <div className="hotel-card-info">
           <div className="hotel-card-info-row">
             <MapPin />
