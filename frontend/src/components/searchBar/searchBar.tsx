@@ -3,29 +3,20 @@ import './index.css';
 
 interface SearchBarProps {
   placeholder: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-const searchBarConfig: Record<string, { placeholder: string }> = {
-  hotels: {
-    placeholder: "Buscar hotéis por nome ou cidade"
-  },
-  reservas: {
-    placeholder: "Buscar reservas por hóspede ou hotel"
-  },
-  hospedes: {
-    placeholder: "Buscar hóspedes por nome, documento ou hotel"
-  }
-}
-
-export function getSearchBarConfig(route: string) {
-  return searchBarConfig[route] || searchBarConfig.hotels;
-}
-
-export default function SearchBar({ placeholder }: SearchBarProps) {
+export default function SearchBar({ placeholder, value, onChange }: SearchBarProps) {
   return (
     <div className="search-bar">
       <Search />
-      <input type="text" placeholder={placeholder} />
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange?.(e.target.value)}
+      />
     </div>
   )
 }

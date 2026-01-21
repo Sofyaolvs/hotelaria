@@ -17,6 +17,7 @@ export default function HotelPage() {
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   const fetchHotels = async () => {
     try {
@@ -56,6 +57,14 @@ export default function HotelPage() {
     }
   };
 
+  const filteredHotels = hotels.filter((hotel) => {
+    const searchLower = search.toLowerCase();
+    return (
+      hotel.name.toLowerCase().includes(searchLower) ||
+      hotel.city.toLowerCase().includes(searchLower)
+    );
+  });
+
   return (
     <PageLayout
       title="Hotéis"
@@ -65,16 +74,18 @@ export default function HotelPage() {
       onAddClick={handleAddHotel}
       showSearchBar
       searchPlaceholder="Buscar hotéis por nome ou cidade"
+      searchValue={search}
+      onSearchChange={setSearch}
     >
       {loading && <p>Carregando...</p>}
       {error && <p className="error-message">{error}</p>}
 
       {!loading && !error && (
         <div className="hotel-grid">
-          {hotels.length === 0 ? (
-            <p>Nenhum hotel cadastrado</p>
+          {filteredHotels.length === 0 ? (
+            <p>{search ? 'Nenhum hotel encontrado' : 'Nenhum hotel cadastrado'}</p>
           ) : (
-            hotels.map((hotel) => (
+            filteredHotels.map((hotel) => (
               <HotelCard
                 key={hotel.id}
                 id={hotel.id}

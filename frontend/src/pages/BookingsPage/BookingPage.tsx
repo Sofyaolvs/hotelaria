@@ -20,6 +20,7 @@ export default function BookingPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   const fetchBooking = async() => {
     try {
@@ -66,6 +67,14 @@ export default function BookingPage() {
       checkOut: new Date(b.checkOutDate).toLocaleDateString('pt-BR'),
   }));
 
+  const filteredBookings = formattedBookings.filter((booking) => {
+    const searchLower = search.toLowerCase();
+    return (
+      booking.hotel.toLowerCase().includes(searchLower) ||
+      booking.guest.toLowerCase().includes(searchLower)
+    );
+  });
+
   return (
     <PageLayout
       title="Reservas"
@@ -75,13 +84,15 @@ export default function BookingPage() {
       onAddClick={handleAddBooking}
       showSearchBar
       searchPlaceholder="Buscar reservas por hóspede ou hotel"
+      searchValue={search}
+      onSearchChange={setSearch}
     >
       {loading && <p>Carregando...</p>}
       {error && <p>Erro ao carregar reservas</p>}
-      
+
       {!loading && !error && (
         <div>
-          <BookingTable bookings={formattedBookings} onDelete={handleDeleteBooking} />
+          <BookingTable bookings={filteredBookings} onDelete={handleDeleteBooking} />
         </div>
       )}
 

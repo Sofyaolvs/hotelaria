@@ -27,6 +27,7 @@ export default function GuestsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   const fetchBookings = async () => {
     try {
@@ -70,6 +71,16 @@ export default function GuestsPage() {
     guests: booking.guests || [],
   }));
 
+  const filteredBookings = formattedBookings.filter((booking) => {
+    const searchLower = search.toLowerCase();
+    const hasMatchingGuest = booking.guests.some(
+      (guest) =>
+        guest.name.toLowerCase().includes(searchLower) ||
+        guest.document.toLowerCase().includes(searchLower)
+    );
+    return hasMatchingGuest || booking.hotel.toLowerCase().includes(searchLower);
+  });
+
   return (
     <PageLayout
       title="Hóspedes"
@@ -79,16 +90,24 @@ export default function GuestsPage() {
       onAddClick={handleAddGuest}
       showSearchBar
       searchPlaceholder="Buscar hóspedes por nome ou documento"
+      searchValue={search}
+      onSearchChange={setSearch}
     >
       {loading && <p>Carregando...</p>}
       {error && <p className="error-message">{error}</p>}
       {!loading && !error && (
-        formattedBookings.length > 0 ? (
-          <GuestCard bookings={formattedBookings} />
+        filteredBookings.length > 0 ? (
+          <GuestCard bookings={filteredBookings} />
         ) : (
           <div className="empty-state">
-            <p>Nenhum hóspede cadastrado ainda.</p>
-            <p>Crie uma reserva primeiro e depois cadastre os hóspedes.</p>
+            {search ? (
+              <p>Nenhum hóspede encontrado.</p>
+            ) : (
+              <>
+                <p>Nenhum hóspede cadastrado ainda.</p>
+                <p>Crie uma reserva primeiro e depois cadastre os hóspedes.</p>
+              </>
+            )}
           </div>
         )
       )}

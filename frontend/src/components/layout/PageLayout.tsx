@@ -11,6 +11,8 @@ interface PageLayoutProps {
   onAddClick?: () => void;
   showSearchBar?: boolean;
   searchPlaceholder?: string;
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
   children?: ReactNode;
 }
 
@@ -22,6 +24,8 @@ export default function PageLayout({
   onAddClick,
   showSearchBar = false,
   searchPlaceholder = '',
+  searchValue,
+  onSearchChange,
   children,
 }: PageLayoutProps) {
   return (
@@ -34,7 +38,13 @@ export default function PageLayout({
         onAddClick={onAddClick}
       />
       <main>
-        {showSearchBar && <SearchBar placeholder={searchPlaceholder} />}
+        {showSearchBar && (
+          <SearchBar
+            placeholder={searchPlaceholder}
+            value={searchValue}
+            onChange={onSearchChange}
+          />
+        )}
         {children}
       </main>
     </div>
