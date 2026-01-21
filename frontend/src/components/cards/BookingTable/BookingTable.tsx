@@ -1,4 +1,4 @@
-import { Calendar, Building2, User, BedDouble } from 'lucide-react';
+import { Calendar, Building2, User, BedDouble, Trash2 } from 'lucide-react';
 import './index.css';
 
 interface Booking {
@@ -12,9 +12,10 @@ interface Booking {
 
 interface BookingTableProps {
   bookings: Booking[];
+  onDelete?: (id: number) => void;
 }
 
-export default function BookingTable({ bookings }: BookingTableProps) {
+export default function BookingTable({ bookings, onDelete }: BookingTableProps) {
   return (
     <div className="booking-table-container">
       <table className="booking-table">
@@ -50,6 +51,7 @@ export default function BookingTable({ bookings }: BookingTableProps) {
                 Check-out
               </div>
             </th>
+            {onDelete && <th></th>}
           </tr>
         </thead>
         <tbody>
@@ -70,6 +72,17 @@ export default function BookingTable({ bookings }: BookingTableProps) {
               <td>
                 <span>{booking.checkOut}</span>
               </td>
+              {onDelete && (
+                <td>
+                  <button
+                    className="booking-delete-btn"
+                    onClick={() => onDelete(booking.id)}
+                    title="Excluir reserva"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

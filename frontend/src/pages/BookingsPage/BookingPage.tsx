@@ -1,50 +1,70 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PageLayout } from "@/components/layout";
 import { BookingTable } from "@/components/cards";
 import { BookingFormModal } from "@/components/modals";
 import './index.css';
+import { bookingService } from '@/services/api';
 
-const mockBookings = [
-  {
-    id: 1,
-    hotel: 'Pousada Cumbuco',
-    guest: 'João Silva',
-    roomType: 'Suíte Master',
-    checkIn: '20/01/2026',
-    checkOut: '25/01/2026',
-  },
-  {
-    id: 2,
-    hotel: 'Hotel Gran Marquise',
-    guest: 'Maria Santos',
-    roomType: 'Quarto Standard',
-    checkIn: '22/01/2026',
-    checkOut: '28/01/2026',
-  },
-  {
-    id: 3,
-    hotel: 'Pousada Cumbuco',
-    guest: 'Carlos Oliveira',
-    roomType: 'Quarto Duplo',
-    checkIn: '15/01/2026',
-    checkOut: '18/01/2026',
-  },
-  {
-    id: 4,
-    hotel: 'Hotel Gran Marquise',
-    guest: 'Ana Costa',
-    roomType: 'Suíte Presidencial',
-    checkIn: '25/01/2026',
-    checkOut: '30/01/2026',
-  },
-];
+interface Booking {
+  id: number;
+  hotel:{id:number; name:string}
+  guest:{id:number; name:string}
+  roomType:string
+  checkIn:string
+  checkOut:string
+}
+
 
 export default function BookingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchBooking = async() => {
+    try {
+      setLoading(true)
+      setError(null)
+      const data = await bookingService.getAll()
+      setBookings(data)
+    } catch (error) {
+      setError('Erro ao carregar reservas')
+      console.log('Erro ao carregar reservas:', error)
+    }finally{
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchBooking()
+  }, [])
 
   const handleAddBooking = () => {
-    setIsModalOpen(true);
+    setIsModalOpen(true)
   }
+
+  const handleBookingCreated=()=>{
+    fetchBooking()
+  }
+
+  const handleDeleteBooking= async(id:number)=>{
+    try{
+    await bookingService.delete(id)
+    fetchBooking()
+    }catch(error){
+      console.log('Erro ao deletar reserva:', error)
+      alert('Erro ao deletar reserva')
+    }
+  }
+
+  const formattedBookings = bookings.map(b => ({                                                                                                                   
+      id: b.id,                                                                                                                                                      
+      hotel: b.hotel?.name || 'N/A',                                                                                                                                 
+      guest: b.guest?.name || 'N/A',                                                                                                                                 
+      roomType: b.roomType,                                                                                                                                          
+      checkIn: new Date(b.checkIn).toLocaleDateString('pt-BR'),                                                                                                      
+      checkOut: new Date(b.checkOut).toLocaleDateString('pt-BR'),                                                                                                    
+  }));
 
   return (
     <PageLayout
@@ -56,11 +76,20 @@ export default function BookingPage() {
       showSearchBar
       searchPlaceholder="Buscar reservas por hóspede ou hotel"
     >
-      <div className="bookings-container">
-        <BookingTable bookings={mockBookings} />
-      </div>
+      {loading && <p>Carregando...</p>}
+      {error && <p>Erro ao carregar reservas</p>}
+      
+      {!loading && !error && (
+        <div>
+          <BookingTable bookings={formattedBookings} onDelete={handleDeleteBooking} />
+        </div>
+      )}
 
-      <BookingFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <BookingFormModal 
+      isOpen={isModalOpen} 
+      onClose={() => setIsModalOpen(false)} 
+      onSuccess={handleBookingCreated} 
+      />
     </PageLayout>
   )
 }
