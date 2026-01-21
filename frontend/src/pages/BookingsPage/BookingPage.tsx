@@ -7,11 +7,11 @@ import { bookingService } from '@/services/api';
 
 interface Booking {
   id: number;
-  hotel:{id:number; name:string}
-  guest:{id:number; name:string}
-  roomType:string
-  checkIn:string
-  checkOut:string
+  hotel: { id: number; name: string };
+  responsibleName: string;
+  roomType: string;
+  checkInDate: string;
+  checkOutDate: string;
 }
 
 
@@ -57,13 +57,13 @@ export default function BookingPage() {
     }
   }
 
-  const formattedBookings = bookings.map(b => ({                                                                                                                   
-      id: b.id,                                                                                                                                                      
-      hotel: b.hotel?.name || 'N/A',                                                                                                                                 
-      guest: b.guest?.name || 'N/A',                                                                                                                                 
-      roomType: b.roomType,                                                                                                                                          
-      checkIn: new Date(b.checkIn).toLocaleDateString('pt-BR'),                                                                                                      
-      checkOut: new Date(b.checkOut).toLocaleDateString('pt-BR'),                                                                                                    
+  const formattedBookings = bookings.map(b => ({
+      id: b.id,
+      hotel: b.hotel?.name || 'N/A',
+      guest: b.responsibleName || 'N/A',
+      roomType: b.roomType || 'N/A',
+      checkIn: new Date(b.checkInDate).toLocaleDateString('pt-BR'),
+      checkOut: new Date(b.checkOutDate).toLocaleDateString('pt-BR'),
   }));
 
   return (

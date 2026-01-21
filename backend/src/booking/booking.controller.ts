@@ -19,6 +19,11 @@ export class BookingController {
         return this.bookingService.findAll()
     }
 
+    @Get('room-types')
+    getRoomTypes() {
+        return this.bookingService.getRoomTypes();
+    }
+
     @Get(':id')
     async findById(@Param('id') id:string){
         return this.bookingService.findById(id)

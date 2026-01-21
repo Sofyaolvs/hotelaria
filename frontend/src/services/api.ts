@@ -25,25 +25,26 @@ api.interceptors.response.use(
 
 export const hotelService = {
   getAll: () => api.get('/hotel').then(res => res.data),
-  getById: (id: number) => api.get(`/hotel/${id}`).then(res => res.data),
+  getById: (id: string) => api.get(`/hotel/${id}`).then(res => res.data),
   create: (data: { name: string; city: string; rooms: number }) =>
     api.post('/hotel', data).then(res => res.data),
-  delete: (id: number) => api.delete(`/hotel/${id}`),
+  delete: (id: string) => api.delete(`/hotel/${id}`),
 };
 
 export const guestService = {
   getAll: () => api.get('/guest').then(res => res.data),
-  getById: (id: number) => api.get(`/guest/${id}`).then(res => res.data),
-  create: (data: { name: string; document: string; phone?: string }) =>
+  getById: (id: string) => api.get(`/guest/${id}`).then(res => res.data),
+  create: (data: { name: string; document: string; phone: string; email: string; bookingIds?: string[] }) =>
     api.post('/guest', data).then(res => res.data),
-  delete: (id: number) => api.delete(`/guest/${id}`),
+  delete: (id: string) => api.delete(`/guest/${id}`),
 };
 
 export const bookingService = {
   getAll: () => api.get('/bookings').then(res => res.data),
   getById: (id: number) => api.get(`/bookings/${id}`).then(res => res.data),
   getGuests: (id: number) => api.get(`/bookings/${id}/guests`).then(res => res.data),
-  create: (data: { hotelId: number; guestId: number; checkIn: string; checkOut: string; roomType: string }) =>
+  getRoomTypes: () => api.get('/bookings/room-types').then(res => res.data),
+  create: (data: { hotelId: string; checkInDate: string; checkOutDate: string; responsibleName: string; roomType: string }) =>
     api.post('/bookings', data).then(res => res.data),
   delete: (id: number) => api.delete(`/bookings/${id}`),
 };

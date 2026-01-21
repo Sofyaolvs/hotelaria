@@ -1,0 +1,99 @@
+.guest-table-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 0 16px;
+}
+
+.guest-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.guest-table thead {
+  background-color: #3730a3;
+  color: #fff;
+}
+
+.guest-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.guest-table th div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.guest-table th svg {
+  width: 18px;
+  height: 18px;
+}
+
+.guest-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s;
+}
+
+.guest-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.guest-table td {
+  padding: 16px;
+  color: #334155;
+}
+
+.guest-name {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.guest-bookings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.guest-booking-badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: #e0e7ff;
+  color: #3730a3;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.no-booking {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.guest-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.guest-delete-btn:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.guest-table-empty {
+  padding: 48px;
+  text-align: center;
+  color: #64748b;
+  background-color: #fff;
+  border-radius: 12px;
+  margin-top: 16px;
+}

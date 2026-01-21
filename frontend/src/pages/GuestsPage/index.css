@@ -1,3 +1,22 @@
 .guests-container {
   margin-top: 24px;
 }
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #64748b;
+  background-color: #fff;
+  border-radius: 12px;
+  margin: 16px;
+}
+
+.empty-state p {
+  margin: 8px 0;
+}
+
+.empty-state p:first-child {
+  font-size: 16px;
+  font-weight: 500;
+  color: #475569;
+}

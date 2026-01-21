@@ -2,11 +2,11 @@ import { Building2, MapPin, Trash2 } from 'lucide-react';
 import './index.css';
 
 interface HotelCardProps {
-  id: number;
+  id: string;
   name: string;
   city: string;
   rooms: number;
-  onDelete?: (id: number) => void;
+  onDelete?: (id: string) => void;
 }
 
 export default function HotelCard({ id, name, city, rooms, onDelete }: HotelCardProps) {

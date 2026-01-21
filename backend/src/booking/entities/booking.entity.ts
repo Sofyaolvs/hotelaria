@@ -12,7 +12,7 @@ export class Booking {
     @JoinColumn({name:'hotel_id'})
     hotel:Hotel
     
-    @ManyToMany(()=> Guest)
+    @ManyToMany(() => Guest, guest => guest.bookings)
     @JoinTable({
         name:'booking_guests',
         joinColumn:{name:'booking_id'},

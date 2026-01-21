@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { Booking } from "./entities/booking.entity";
 import { CreateBookingDto } from "./dto/create-booking.dto";
 import { Hotel } from "src/hotel/entities/hotel.entity";
+import { RoomType } from "./enums/room-type.enum";
 
 @Injectable()
 export class BookingService {
@@ -28,6 +29,7 @@ export class BookingService {
             checkInDate: createBookingDto.checkInDate,
             checkOutDate: createBookingDto.checkOutDate,
             responsibleName: createBookingDto.responsibleName,
+            roomType: createBookingDto.roomType,
             status: 'pending'
         });
 
@@ -36,7 +38,7 @@ export class BookingService {
 
     async findAll(){
         return await this.bookingRepository.find({
-            relations: ['hotel']
+            relations: ['hotel', 'guests']
         });
     }
 
@@ -77,5 +79,12 @@ export class BookingService {
 
         await this.bookingRepository.delete(id);
         return { message: 'Reserva deletada com sucesso' };
+    }
+
+    getRoomTypes() {
+        return Object.entries(RoomType).map(([key, value]) => ({
+            key,
+            value,
+        }));
     }
 }

@@ -6,7 +6,7 @@ import { hotelService } from '@/services/api';
 import './index.css';
 
 interface Hotel {
-  id: number;
+  id: string;
   name: string;
   city: string;
   rooms: number;
@@ -44,7 +44,7 @@ export default function HotelPage() {
     fetchHotels();
   };
 
-  const handleDeleteHotel = async (id: number) => {
+  const handleDeleteHotel = async (id: string) => {
     if (!confirm('Tem certeza que deseja excluir este hotel?')) return;
 
     try {

@@ -2,7 +2,7 @@ import { Building2, Calendar, User, FileText, Phone, BedDouble } from "lucide-re
 import './index.css';
 
 interface Guest {
-  id: number;
+  id: string;
   name: string;
   document: string;
   phone: string;
@@ -10,7 +10,7 @@ interface Guest {
 }
 
 interface BookingWithGuests {
-  id: number;
+  id: string;
   hotel: string;
   checkIn: string;
   checkOut: string;

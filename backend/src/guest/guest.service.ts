@@ -17,20 +17,25 @@ export class GuestService {
             const { bookingIds, ...guestData } = createGuestDto;
 
             const newGuest = this.guestRepository.create(guestData);
+            const savedGuest = await this.guestRepository.save(newGuest);
 
             if (bookingIds && bookingIds.length > 0) {
                 const bookings = await this.bookingRepository.find({
-                    where: { id: In(bookingIds) }
+                    where: { id: In(bookingIds) },
+                    relations: ['guests']
                 });
 
                 if (bookings.length !== bookingIds.length) {
                     throw new NotFoundException('Uma ou mais reservas não foram encontradas');
                 }
 
-                newGuest.bookings = bookings;
+                for (const booking of bookings) {
+                    booking.guests = [...(booking.guests || []), savedGuest];
+                    await this.bookingRepository.save(booking);
+                }
             }
 
-            return await this.guestRepository.save(newGuest);
+            return savedGuest;
         } catch (error) {
             console.log("Erro ao criar hóspede", error)
             if (error instanceof NotFoundException) {
@@ -42,7 +47,9 @@ export class GuestService {
 
     async findAll():Promise<Guest[]>{
         try {
-            const allGuest = await this.guestRepository.find()
+            const allGuest = await this.guestRepository.find({
+                relations: ['bookings', 'bookings.hotel']
+            })
             return allGuest
         } catch (error) {
             console.log("Erro ao buscar hóspedes", error)
@@ -65,9 +72,38 @@ export class GuestService {
 
     async deleteGuest(id:string):Promise<void>{
         try {
-            await this.guestRepository.delete({id})
+            // Busca o guest com suas reservas
+            const guest = await this.guestRepository.findOne({
+                where: { id },
+                relations: ['bookings']
+            });
+
+            if (!guest) {
+                throw new NotFoundException('Hóspede não encontrado');
+            }
+
+            // Remove o guest de todas as reservas associadas
+            if (guest.bookings && guest.bookings.length > 0) {
+                for (const booking of guest.bookings) {
+                    const bookingWithGuests = await this.bookingRepository.findOne({
+                        where: { id: booking.id },
+                        relations: ['guests']
+                    });
+
+                    if (bookingWithGuests) {
+                        bookingWithGuests.guests = bookingWithGuests.guests.filter(g => g.id !== id);
+                        await this.bookingRepository.save(bookingWithGuests);
+                    }
+                }
+            }
+
+            // Agora deleta o guest
+            await this.guestRepository.delete({ id });
         } catch (error) {
             console.log("Erro ao deletar hóspede", error)
+            if (error instanceof NotFoundException) {
+                throw error;
+            }
             throw new Error('Erro ao deletar hóspede')
         }
     }

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import Modal from './modal/Modal';
 import Button from '../button/button';
-import { bookingService, hotelService, guestService } from '@/services/api';
+import { bookingService, hotelService } from '../../services/api';
 
 interface Hotel {
   id: number;
   name: string;
 }
 
-interface Guest {
-  id: number;
-  name: string;
+interface RoomType {
+  key: string;
+  value: string;
 }
 
 interface BookingFormModalProps {
@@ -22,13 +22,13 @@ interface BookingFormModalProps {
 export default function BookingFormModal({ isOpen, onClose, onSuccess }: BookingFormModalProps) {
   const [formData, setFormData] = useState({
     hotelId: '',
-    guestId: '',
-    checkIn: '',
-    checkOut: '',
+    responsibleName: '',
+    checkInDate: '',
+    checkOutDate: '',
     roomType: '',
   });
   const [hotels, setHotels] = useState<Hotel[]>([]);
-  const [guests, setGuests] = useState<Guest[]>([]);
+  const [roomTypes, setRoomTypes] = useState<RoomType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,12 +40,12 @@ export default function BookingFormModal({ isOpen, onClose, onSuccess }: Booking
 
   const loadData = async () => {
     try {
-      const [hotelsData, guestsData] = await Promise.all([
+      const [hotelsData, roomTypesData] = await Promise.all([
         hotelService.getAll(),
-        guestService.getAll(),
+        bookingService.getRoomTypes(),
       ]);
       setHotels(hotelsData);
-      setGuests(guestsData);
+      setRoomTypes(roomTypesData);
     } catch (err) {
       console.error('Erro ao carregar dados:', err);
     }
@@ -63,14 +63,14 @@ export default function BookingFormModal({ isOpen, onClose, onSuccess }: Booking
 
     try {
       await bookingService.create({
-        hotelId: Number(formData.hotelId),
-        guestId: Number(formData.guestId),
-        checkIn: formData.checkIn,
-        checkOut: formData.checkOut,
+        hotelId: formData.hotelId,
+        checkInDate: formData.checkInDate,
+        checkOutDate: formData.checkOutDate,
+        responsibleName: formData.responsibleName,
         roomType: formData.roomType,
       });
 
-      setFormData({ hotelId: '', guestId: '', checkIn: '', checkOut: '', roomType: '' });
+      setFormData({ hotelId: '', responsibleName: '', checkInDate: '', checkOutDate: '', roomType: '' });
       onSuccess?.();
       onClose();
     } catch (err) {
@@ -82,7 +82,7 @@ export default function BookingFormModal({ isOpen, onClose, onSuccess }: Booking
   };
 
   const handleClose = () => {
-    setFormData({ hotelId: '', guestId: '', checkIn: '', checkOut: '', roomType: '' });
+    setFormData({ hotelId: '', responsibleName: '', checkInDate: '', checkOutDate: '', roomType: '' });
     setError(null);
     onClose();
   };
@@ -111,21 +111,16 @@ export default function BookingFormModal({ isOpen, onClose, onSuccess }: Booking
         </div>
 
         <div className="modal-form-group">
-          <label>Responsável</label>
-          <select
-            name="guestId"
-            value={formData.guestId}
+          <label>Responsável pela Reserva</label>
+          <input
+            type="text"
+            name="responsibleName"
+            value={formData.responsibleName}
             onChange={handleChange}
+            placeholder="Nome do responsável"
             required
             disabled={loading}
-          >
-            <option value="">Selecione o responsável</option>
-            {guests.map((guest) => (
-              <option key={guest.id} value={guest.id}>
-                {guest.name}
-              </option>
-            ))}
-          </select>
+          />
         </div>
 
         <div className="modal-form-row">
@@ -133,8 +128,8 @@ export default function BookingFormModal({ isOpen, onClose, onSuccess }: Booking
             <label>Check-in</label>
             <input
               type="date"
-              name="checkIn"
-              value={formData.checkIn}
+              name="checkInDate"
+              value={formData.checkInDate}
               onChange={handleChange}
               required
               disabled={loading}
@@ -145,8 +140,8 @@ export default function BookingFormModal({ isOpen, onClose, onSuccess }: Booking
             <label>Check-out</label>
             <input
               type="date"
-              name="checkOut"
-              value={formData.checkOut}
+              name="checkOutDate"
+              value={formData.checkOutDate}
               onChange={handleChange}
               required
               disabled={loading}
@@ -164,10 +159,11 @@ export default function BookingFormModal({ isOpen, onClose, onSuccess }: Booking
             disabled={loading}
           >
             <option value="">Selecione o tipo</option>
-            <option value="standard">Standard</option>
-            <option value="deluxe">Deluxe</option>
-            <option value="suite">Suíte</option>
-            <option value="presidential">Presidencial</option>
+            {roomTypes.map((type) => (
+              <option key={type.key} value={type.value}>
+                {type.value}
+              </option>
+            ))}
           </select>
         </div>
 
