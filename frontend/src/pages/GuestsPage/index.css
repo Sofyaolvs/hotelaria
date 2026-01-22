@@ -20,3 +20,81 @@
   font-weight: 500;
   color: #475569;
 }
+
+/* Seção de hóspedes sem reserva */
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+  margin: 24px 16px 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.orphan-guests-section {
+  margin-bottom: 24px;
+}
+
+.orphan-guests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 16px;
+}
+
+.orphan-guest-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #fef3c7;
+  background-color: #fffbeb;
+}
+
+.orphan-guest-info {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.orphan-guest-name {
+  font-weight: 500;
+  color: #1e293b;
+  min-width: 180px;
+}
+
+.orphan-guest-document {
+  color: #64748b;
+  font-size: 14px;
+  min-width: 140px;
+}
+
+.orphan-guest-contact {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.associate-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.associate-btn:hover {
+  background-color: #2563eb;
+}
+
+.associate-btn svg {
+  flex-shrink: 0;
+}

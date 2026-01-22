@@ -36,6 +36,8 @@ export const guestService = {
   getById: (id: string) => api.get(`/guest/${id}`).then(res => res.data),
   create: (data: { name: string; document: string; phone: string; email: string; bookingIds?: string[] }) =>
     api.post('/guest', data).then(res => res.data),
+  update: (id: string, data: { name?: string; document?: string; phone?: string; email?: string; bookingIds?: string[] }) =>
+    api.patch(`/guest/${id}`, data).then(res => res.data),
   delete: (id: string) => api.delete(`/guest/${id}`),
 };
 

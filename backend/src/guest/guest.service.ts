@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Guest } from "./entities/guest.entitiy";
 import { In, Repository } from "typeorm";
 import { CreateGuestDto } from "./dto/create-guest.dto";
+import { UpdateGuestDto } from "./dto/update-guest.dto";
 import { Booking } from "src/booking/entities/booking.entity";
 
 @Injectable()
@@ -67,6 +68,60 @@ export class GuestService {
         } catch (error) {
             console.log("Erro ao buscar hóspede", error)
             throw new Error('Erro ao buscar hóspede')
+        }
+    }
+
+    async updateGuest(id: string, updateGuestDto: UpdateGuestDto): Promise<Guest> {
+        try {
+            const guest = await this.guestRepository.findOne({
+                where: { id },
+                relations: ['bookings']
+            });
+
+            if (!guest) {
+                throw new NotFoundException('Hóspede não encontrado');
+            }
+
+            const { bookingIds, ...guestData } = updateGuestDto;
+
+            // Atualiza os dados básicos do hóspede
+            if (Object.keys(guestData).length > 0) {
+                Object.assign(guest, guestData);
+                await this.guestRepository.save(guest);
+            }
+
+            // Associa novas reservas se bookingIds foi fornecido
+            if (bookingIds && bookingIds.length > 0) {
+                const bookings = await this.bookingRepository.find({
+                    where: { id: In(bookingIds) },
+                    relations: ['guests']
+                });
+
+                if (bookings.length !== bookingIds.length) {
+                    throw new NotFoundException('Uma ou mais reservas não foram encontradas');
+                }
+
+                for (const booking of bookings) {
+                    const alreadyAssociated = booking.guests?.some(g => g.id === guest.id);
+                    if (!alreadyAssociated) {
+                        booking.guests = [...(booking.guests || []), guest];
+                        await this.bookingRepository.save(booking);
+                    }
+                }
+            }
+
+            const updatedGuest = await this.guestRepository.findOne({
+                where: { id },
+                relations: ['bookings', 'bookings.hotel']
+            });
+
+            return updatedGuest!;
+        } catch (error) {
+            console.log("Erro ao atualizar hóspede", error);
+            if (error instanceof NotFoundException) {
+                throw error;
+            }
+            throw new Error('Erro ao atualizar hóspede');
         }
     }
 

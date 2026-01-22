@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { HotelCard } from "@/components/cards";
 import { PageLayout } from "@/components/layout";
-import { HotelFormModal } from "@/components/modals";
+import { HotelFormModal, ConfirmModal } from "@/components/modals";
 import { hotelService } from '@/services/api';
 import './index.css';
 
@@ -18,6 +18,9 @@ export default function HotelPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [hotelToDelete, setHotelToDelete] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchHotels = async () => {
     try {
@@ -45,15 +48,25 @@ export default function HotelPage() {
     fetchHotels();
   };
 
-  const handleDeleteHotel = async (id: string) => {
-    if (!confirm('Tem certeza que deseja excluir este hotel?')) return;
+  const handleDeleteHotel = (id: string) => {
+    setHotelToDelete(id);
+    setIsConfirmModalOpen(true);
+  };
+
+  const confirmDeleteHotel = async () => {
+    if (!hotelToDelete) return;
 
     try {
-      await hotelService.delete(id);
+      setIsDeleting(true);
+      await hotelService.delete(hotelToDelete);
       fetchHotels();
+      setIsConfirmModalOpen(false);
+      setHotelToDelete(null);
     } catch (err) {
       console.error('Erro ao deletar hotel:', err);
       alert('Erro ao excluir hotel');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -103,6 +116,20 @@ export default function HotelPage() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSuccess={handleHotelCreated}
+      />
+
+      <ConfirmModal
+        isOpen={isConfirmModalOpen}
+        onClose={() => {
+          setIsConfirmModalOpen(false);
+          setHotelToDelete(null);
+        }}
+        onConfirm={confirmDeleteHotel}
+        title="Excluir Hotel"
+        message="Tem certeza que deseja excluir este hotel?"
+        warning="Esta ação não pode ser desfeita."
+        confirmLabel="Excluir"
+        isLoading={isDeleting}
       />
     </PageLayout>
   );

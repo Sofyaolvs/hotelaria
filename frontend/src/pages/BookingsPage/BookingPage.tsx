@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { PageLayout } from "@/components/layout";
 import { BookingTable } from "@/components/cards";
-import { BookingFormModal } from "@/components/modals";
+import { BookingFormModal, ConfirmModal } from "@/components/modals";
 import './index.css';
 import { bookingService } from '@/services/api';
 
@@ -21,6 +21,9 @@ export default function BookingPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [bookingToDelete, setBookingToDelete] = useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchBooking = async() => {
     try {
@@ -48,15 +51,27 @@ export default function BookingPage() {
     fetchBooking()
   }
 
-  const handleDeleteBooking= async(id:number)=>{
-    try{
-    await bookingService.delete(id)
-    fetchBooking()
-    }catch(error){
-      console.log('Erro ao deletar reserva:', error)
-      alert('Erro ao deletar reserva')
+  const handleDeleteBooking = (id: number) => {
+    setBookingToDelete(id);
+    setIsConfirmModalOpen(true);
+  };
+
+  const confirmDeleteBooking = async () => {
+    if (!bookingToDelete) return;
+
+    try {
+      setIsDeleting(true);
+      await bookingService.delete(bookingToDelete);
+      fetchBooking();
+      setIsConfirmModalOpen(false);
+      setBookingToDelete(null);
+    } catch (error) {
+      console.log('Erro ao deletar reserva:', error);
+      alert('Erro ao deletar reserva');
+    } finally {
+      setIsDeleting(false);
     }
-  }
+  };
 
   const formattedBookings = bookings.map(b => ({
       id: b.id,
@@ -96,10 +111,24 @@ export default function BookingPage() {
         </div>
       )}
 
-      <BookingFormModal 
-      isOpen={isModalOpen} 
-      onClose={() => setIsModalOpen(false)} 
-      onSuccess={handleBookingCreated} 
+      <BookingFormModal
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      onSuccess={handleBookingCreated}
+      />
+
+      <ConfirmModal
+        isOpen={isConfirmModalOpen}
+        onClose={() => {
+          setIsConfirmModalOpen(false);
+          setBookingToDelete(null);
+        }}
+        onConfirm={confirmDeleteBooking}
+        title="Excluir Reserva"
+        message="Tem certeza que deseja excluir esta reserva?"
+        warning="Esta ação não pode ser desfeita."
+        confirmLabel="Excluir"
+        isLoading={isDeleting}
       />
     </PageLayout>
   )
