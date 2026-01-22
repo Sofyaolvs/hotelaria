@@ -10,3 +10,13 @@
   flex: 1;
   margin-top: 24px;
 }
+
+@media (max-width: 768px) {
+  .page-layout {
+    padding: 70px 16px 16px;
+  }
+
+  .page-layout main {
+    margin-top: 16px;
+  }
+}

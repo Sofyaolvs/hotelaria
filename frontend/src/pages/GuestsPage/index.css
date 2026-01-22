@@ -21,7 +21,7 @@
   color: #475569;
 }
 
-/* Seção de hóspedes sem reserva */
+
 .section-title {
   font-size: 14px;
   font-weight: 600;
@@ -31,47 +31,44 @@
   letter-spacing: 0.5px;
 }
 
-.orphan-guests-section {
+.not-associated-guests-section {
   margin-bottom: 24px;
 }
 
-.orphan-guests-list {
+.not-associated-guests-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 0 16px;
 }
 
-.orphan-guest-card {
+.not-associated-guest-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  background-color: #fff;
   border-radius: 12px;
-  border: 1px solid #fef3c7;
-  background-color: #fffbeb;
 }
 
-.orphan-guest-info {
+.not-associated-guest-info {
   display: flex;
   align-items: center;
   gap: 24px;
 }
 
-.orphan-guest-name {
+.not-associated-guest-name {
   font-weight: 500;
   color: #1e293b;
   min-width: 180px;
 }
 
-.orphan-guest-document {
+.not-associated-guest-document {
   color: #64748b;
   font-size: 14px;
   min-width: 140px;
 }
 
-.orphan-guest-contact {
+.not-associated-guest-contact {
   color: #64748b;
   font-size: 14px;
 }
@@ -97,4 +94,59 @@
 
 .associate-btn svg {
   flex-shrink: 0;
+}
+
+
+@media (max-width: 768px) {
+  .section-title {
+    margin: 16px 8px 8px;
+    font-size: 12px;
+  }
+
+  .not-associated-guests-list {
+    margin: 0 8px;
+    gap: 6px;
+  }
+
+  .not-associated-guest-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .not-associated-guest-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .not-associated-guest-name,
+  .not-associated-guest-document,
+  .not-associated-guest-contact {
+    min-width: auto;
+    font-size: 13px;
+  }
+
+  .not-associated-guest-name {
+    font-size: 14px;
+  }
+
+  .associate-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 16px;
+  }
+
+  .empty-state {
+    padding: 32px 16px;
+    margin: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .guests-container {
+    margin-top: 16px;
+  }
 }

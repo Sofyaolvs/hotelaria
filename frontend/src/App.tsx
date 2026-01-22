@@ -11,6 +11,9 @@ import { useAuth } from './hooks/useAuth'
 function App() {
   const { isAuthenticated, isLoading, error, login, logout } = useAuth()
   const [currentRoute, setCurrentRoute] = useState('dashboard')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
 
   const renderPage = () => {
     switch (currentRoute) {
@@ -31,7 +34,13 @@ function App() {
 
   return (
     <div className="app-container">
-      <Sidebar activeItem={currentRoute} onNavigate={setCurrentRoute} onLogout={logout} />
+      <Sidebar
+        activeItem={currentRoute}
+        onNavigate={setCurrentRoute}
+        onLogout={logout}
+        isOpen={sidebarOpen}
+        onToggle={toggleSidebar}
+      />
       {renderPage()}
     </div>
   )

@@ -11,6 +11,7 @@ export function useAuth() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
+
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -21,7 +22,11 @@ export function useAuth() {
       localStorage.setItem('token', response.data.access_token);
       setIsAuthenticated(true);
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Erro ao fazer login';
+      let errorMessage = 'Erro ao fazer login';
+      if (err && typeof err === 'object' && 'response' in err) {
+        const axiosError = err as { response?: { data?: { message?: string } } };
+        errorMessage = axiosError.response?.data?.message || errorMessage;
+      }
       setError(errorMessage);
       throw err;
     } finally {

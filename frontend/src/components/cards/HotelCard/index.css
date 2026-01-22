@@ -87,4 +87,31 @@
   font-weight: 600;
 }
 
+@media (max-width: 768px) {
+  .hotel-card {
+    margin: 8px;
+  }
+
+  .hotel-card-image {
+    height: 120px;
+  }
+
+  .hotel-card-image svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .hotel-card-content {
+    padding: 12px;
+    margin: 6px;
+  }
+
+  .hotel-card-content h3 {
+    font-size: 16px;
+  }
+
+  .hotel-card-info-row span {
+    font-size: 13px;
+  }
+}
 
