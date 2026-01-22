@@ -46,6 +46,11 @@ export default function LoginPage({ onLogin, isLoading, error }: LoginPageProps)
               required
               disabled={isLoading}
             />
+
+            <div className="info">
+              <p>Usuário: admin@hotel.com</p>
+              <p>Senha: 123456</p>
+            </div>
           </div>
 
           <button type="submit" className="login-button" disabled={isLoading}>
